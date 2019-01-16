@@ -11,11 +11,16 @@ class TodoList extends React.Component {
       {
         text: 'Test Task',
         priority: 5,
+        done: true,
+        ts: 123456,
       },
       {
         text: 'Test Task 2',
+        priority: 5,
+        done: false,
+        ts: 2345678,
       }],
-    inputValue: null,
+    inputValue: '',
   }
 
   addTask = (event) => {
@@ -31,9 +36,26 @@ class TodoList extends React.Component {
     }
   }
 
+  setTaskAsDone = (i) => {
+    const { tasks } = this.state
+    const task = tasks[i]
+    task.done = !task.done
+    if (task.done) {
+      tasks.splice(i, 1)
+      tasks.push(task)
+    } else if (!task.done) {
+      // to be done to let the task goes back to it's initial position
+    }
+    console.log(tasks)
+    this.setState({
+      tasks,
+    })
+  }
+
+
   deleteTask = (i) => {
     const { tasks } = this.state
-    console.log(i)
+
     tasks.splice(i, 1)
     this.setState({
       tasks,
@@ -58,6 +80,7 @@ class TodoList extends React.Component {
           <ListOfTasks
             tasks={this.state.tasks}
             deleteTask={this.deleteTask}
+            setTaskAsDone={this.setTaskAsDone}
           />
         </div>
       </div>
@@ -73,30 +96,42 @@ const InputTask = ({ onChangeTask, value, addTask }) => (
     <label className="input-label">
     What's on your path today ?
       <input
-          className="input-round"
-          onChange={onChangeTask}
-          value={value}
-          type="text"
-          onKeyPress={addTask}
-        />
+        className="input-round"
+        onChange={onChangeTask}
+        value={value}
+        type="text"
+        onKeyPress={addTask}
+      />
     </label>
-    
-    
+
+
   </div>
 )
 
 
-const ListOfTasks = ({ tasks, deleteTask }) => (
-  <div>
-    <ol>
-      {tasks.map((task, i) => (
-        <li>
-          {task.text}
-          <FontAwesomeIcon key={i} icon={'fas','trash'} onClick={() => deleteTask(i)} className="icon-button"/>
-        </li>
-      ))
+const ListOfTasks = ({ tasks, deleteTask, setTaskAsDone }) => (
+  <div className="list-container">
+    {tasks.map((task, i) => {
+      const done = task.done ? 'done' : ''
+      return (
+        <div key={i} className="list">
+          <FontAwesomeIcon
+            icon="check-square"
+            onClick={() => setTaskAsDone(i)}
+            className={`icon okay ${done}`}
+          />
+          <p className={`text ${done}`}>
+            {task.text}
+          </p>
+          <FontAwesomeIcon
+            icon={'fas', 'times'}
+            onClick={() => deleteTask(i)}
+            className="icon delete"
+          />
+        </div>
+      )
+    })
       }
-    </ol>
   </div>
 )
 
