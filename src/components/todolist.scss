@@ -1,0 +1,42 @@
+
+.container {
+    display: block;
+    margin: 0 auto;
+
+}
+
+.header {
+    background-color: #455a64;
+    color: #fafafa;
+    height: 50px;
+    padding: 0.5rem;
+
+    h1 {
+        margin: 0;
+        line-height: 50px;
+        text-align: center;
+    }
+}
+
+.input {
+    margin: 0 auto;
+    width: 60%;
+
+    input {
+
+        margin: 0 auto;
+    }
+
+    .button {
+        position: relative;
+    }
+}
+
+.main-app {
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0px 3px 0.75px 0.75px lightgrey;
+    padding: 1rem;
+    width: 60%;
+    background-color: #b0bec5;
+    margin: 0 auto;
+}
