@@ -2,7 +2,7 @@
 .container {
     display: block;
     margin: 0 auto;
-
+    font-family:'Open Sans';
 }
 
 .header {
@@ -18,17 +18,33 @@
     }
 }
 
-.input {
+.input-label{
+    width:100%;
+    text-align:left;
+    font-size:1rem;
+}
+
+
+.input-round {
+    position:relative;
+    padding:0.85em 1.5em;
+    border-radius:50px;
+    border:none;
     margin: 0 auto;
-    width: 60%;
+    font-weight:bold;
+    user-select: none;
+}
 
-    input {
-
-        margin: 0 auto;
-    }
+.input {
+    display:block;
+    margin: 0 auto;
+    width: 80%;
+    text-align: center;
+    
 
     .button {
-        position: relative;
+        position:relative;
+        margin:0 auto;
     }
 }
 
@@ -39,4 +55,11 @@
     width: 60%;
     background-color: #b0bec5;
     margin: 0 auto;
+}
+.icon-button {
+    :hover{
+        cursor: pointer;
+        color:#f44336;
+    }
+    margin:1rem;
 }

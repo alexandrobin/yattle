@@ -4,9 +4,12 @@ import {
   Link,
 } from 'gatsby'
 
+
 import Layout from '../components/layout'
+import library from '../components/fontawesome'
 import SEO from '../components/seo'
 import TodoList from '../components/todolist'
+
 
 const IndexPage = () => (
   <Layout>
@@ -16,6 +19,7 @@ const IndexPage = () => (
     ['todolist', 'application', 'react']}
     />
     <TodoList />
+    
   </Layout>
 )
 

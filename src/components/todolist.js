@@ -1,5 +1,7 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/button-has-type */
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import './todolist.scss'
 
@@ -16,20 +18,23 @@ class TodoList extends React.Component {
     inputValue: null,
   }
 
-  addTask = () => {
-    const { tasks } = this.state
-    const newTask = {
-      text: this.state.inputValue,
+  addTask = (event) => {
+    if (event.key === 'Enter') {
+      const { tasks } = this.state
+      const newTask = {
+        text: this.state.inputValue,
+      }
+      tasks.push(newTask)
+      this.setState({
+        tasks,
+      })
     }
-    tasks.push(newTask)
-    this.setState({
-      tasks,
-    })
   }
 
-  deleteTask = (e) => {
+  deleteTask = (i) => {
     const { tasks } = this.state
-    tasks.splice(e.target.getAttribute('index'), 1)
+    console.log(i)
+    tasks.splice(i, 1)
     this.setState({
       tasks,
     })
@@ -65,14 +70,18 @@ class TodoList extends React.Component {
 
 const InputTask = ({ onChangeTask, value, addTask }) => (
   <div className="input">
-    <input
-      onChange={onChangeTask}
-      value={value}
-      type="text"
-    />
-    <button className="button" onClick={addTask}>
-      Add
-    </button>
+    <label className="input-label">
+    What's on your path today ?
+      <input
+          className="input-round"
+          onChange={onChangeTask}
+          value={value}
+          type="text"
+          onKeyPress={addTask}
+        />
+    </label>
+    
+    
   </div>
 )
 
@@ -83,9 +92,7 @@ const ListOfTasks = ({ tasks, deleteTask }) => (
       {tasks.map((task, i) => (
         <li>
           {task.text}
-          <button index={i} onClick={deleteTask} type="reset">
-            Delete
-          </button>
+          <FontAwesomeIcon key={i} icon={'fas','trash'} onClick={() => deleteTask(i)} className="icon-button"/>
         </li>
       ))
       }
