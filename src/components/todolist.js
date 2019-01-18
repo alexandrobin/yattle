@@ -43,12 +43,12 @@ class TodoList extends React.Component {
     if (task.done) {
       tasks.splice(i, 1)
       tasks.push(task)
-      let ding = new Audio('https://freesound.org/data/previews/66/66136_606715-lq.mp3')
+      const ding = new Audio('https://freesound.org/data/previews/66/66136_606715-lq.mp3')
       ding.play()
     } else if (!task.done) {
       // to be done to let the task goes back to it's initial position
     }
-    
+
     console.log(tasks)
     this.setState({
       tasks,
@@ -114,32 +114,30 @@ const InputTask = ({ onChangeTask, value, addTask }) => (
 
 const ListOfTasks = ({ tasks, deleteTask, setTaskAsDone }) => (
   <div className="list-container">
-    {tasks.map((task, i) => {
-      return (
+    {tasks.map((task, i) => (
         <Task i={i} task={task} deleteTask={deleteTask} setTaskAsDone={setTaskAsDone}/>
-      )
-    })
+      ))
       }
   </div>
 )
 
-class Task extends React.Component{
-  render(){
+class Task extends React.Component {
+  render() {
     const done = this.props.task.done
-    return(
+    return (
       <div key={this.props.i} className="list" draggable>
         <FontAwesomeIcon
-          icon={done ? ['fas', 'check-circle'] : ['far', 'check-circle'] }
+          icon={done ? ['fas', 'check-circle'] : ['far', 'check-circle']}
           onClick={() => this.props.setTaskAsDone(this.props.i)}
-          className={`icon okay ${done ? 'done' : ''}`}
+          className={`tooltiped icon okay ${done ? 'done' : ''}`}
         />
         <p className={`text ${done ? 'done' : ''}`}>
           {this.props.task.text}
         </p>
         <FontAwesomeIcon
           icon={['fas', 'times']}
-            onClick={() => this.props.deleteTask(this.props.i)}
-        className="icon delete"
+          onClick={() => this.props.deleteTask(this.props.i)}
+          className="icon delete"
         />
       </div>
     )
