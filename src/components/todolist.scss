@@ -25,6 +25,7 @@
     width:100%;
     text-align:center;
     font-size:1rem;
+    margin-bottom:1rem;
 }
 
 
@@ -50,6 +51,7 @@
 .input {
     display:block;
     margin: 0 auto;
+    margin-bottom: 1rem;
     width: 100%;
     text-align: center;
     
@@ -64,7 +66,7 @@
     color:white;
     border-radius: 0 0 5px 5px;
     padding: 1rem;
-    width: 60%;
+    width: 80%;
     margin: 0 auto;
 }
 
@@ -76,22 +78,29 @@
     flex-direction: column;
     
     .list {
-        display: inline-block;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 1rem;
         
-        :hover{
+        &:hover{
+            .delete{
+                color:white;
+            }
             cursor: pointer;
         }
     }
     .icon {
-        margin:0px 15px;
         transition:all 1s;
+        margin:0 0.3rem;
         
     }
     .done {
         color: green;
     }
     .text{
-        display:inline-block
+        flex:1;
+        width:100%;
     }
     .delete {
         color:transparent;

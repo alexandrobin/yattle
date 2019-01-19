@@ -2,7 +2,7 @@
 /* eslint-disable react/button-has-type */
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import Pomodoro from './pomodoro'
 import './todolist.scss'
 
 class TodoList extends React.Component {
@@ -65,6 +65,11 @@ class TodoList extends React.Component {
     })
   }
 
+  onEditTask = (e) => {
+    const { tasks } = this.state
+    console.log(e)
+  }
+
   onChangeTask = (e) => {
     this.setState({
       inputValue: e.target.value,
@@ -112,31 +117,43 @@ const InputTask = ({ onChangeTask, value, addTask }) => (
 )
 
 
-const ListOfTasks = ({ tasks, deleteTask, setTaskAsDone }) => (
+const ListOfTasks = ({
+  tasks, deleteTask, setTaskAsDone, onEditTask,
+}) => (
   <div className="list-container">
     {tasks.map((task, i) => (
-        <Task i={i} task={task} deleteTask={deleteTask} setTaskAsDone={setTaskAsDone}/>
-      ))
+      <Task i={i} task={task} deleteTask={deleteTask} setTaskAsDone={setTaskAsDone} onEditTask={onEditTask} />
+    ))
       }
   </div>
 )
 
 class Task extends React.Component {
   render() {
-    const done = this.props.task.done
+    const {
+      setTaskAsDone, task, i, onEditTask, deleteTask,
+    } = this.props
+    const done = task.done
     return (
-      <div key={this.props.i} className="list" draggable>
+      <div key={i} className="list" draggable>
         <FontAwesomeIcon
           icon={done ? ['fas', 'check-circle'] : ['far', 'check-circle']}
-          onClick={() => this.props.setTaskAsDone(this.props.i)}
+          onClick={() => setTaskAsDone(i)}
           className={`tooltiped icon okay ${done ? 'done' : ''}`}
         />
-        <p className={`text ${done ? 'done' : ''}`}>
-          {this.props.task.text}
+        <p
+          contentEditable
+          className={
+          `text ${done ? 'done' : ''}`
+        }
+          onChange={onEditTask}
+        >
+          {task.text}
         </p>
+        <Pomodoro />
         <FontAwesomeIcon
-          icon={['fas', 'times']}
-          onClick={() => this.props.deleteTask(this.props.i)}
+          icon={['fas', 'trash']}
+          onClick={() => deleteTask(i)}
           className="icon delete"
         />
       </div>
