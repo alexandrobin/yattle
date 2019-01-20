@@ -9,7 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@dazzled/framework-server": "^2.2.0"
+    "@foundationjs/persistence": "^0.1.1",
+    "@foundationjs/server": "^0.1.3"
   },
   "devDependencies": {
     "esm": "^3.1.1"

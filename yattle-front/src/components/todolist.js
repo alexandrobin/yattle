@@ -123,31 +123,10 @@ const ListOfTasks = ({
   tasks, deleteTask, setTaskAsDone, onEditTask, data,
 }) => (
   <div className="list-container">
-    {/* {tasks.map((task, i) => (
+    {tasks.map((task, i) => (
       <Task i={i} task={task} deleteTask={deleteTask} setTaskAsDone={setTaskAsDone} onEditTask={onEditTask} />
     ))
-      } */}
-    {
-      data.allStrapiTask.edges.map((task, i) => (
-        <Task
-          i={
-          i
-        }
-          task={
-          task
-        }
-          deleteTask={
-          deleteTask
-        }
-          setTaskAsDone={
-          setTaskAsDone
-        }
-          onEditTask={
-          onEditTask
-        }
-        />
-      ))
-    }
+      }
   </div>
 )
 
@@ -156,7 +135,7 @@ class Task extends React.Component {
     const {
       setTaskAsDone, task, i, onEditTask, deleteTask,
     } = this.props
-    const done = task.node.done
+    const done = task.done
     return (
 
       <div key={i} className="list" draggable>
@@ -172,7 +151,7 @@ class Task extends React.Component {
         }
           onChange={onEditTask}
         >
-          {task.node.content}
+          {task.content}
         </p>
         <Pomodoro />
         <FontAwesomeIcon

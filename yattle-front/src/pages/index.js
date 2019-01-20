@@ -12,30 +12,16 @@ import SEO from '../components/seo'
 import TodoList from '../components/todolist'
 
 
-const IndexPage = ({ data }) => (
+const IndexPage = () => (
   <Layout>
     <SEO
       title="Yattle"
       keywords={
     ['todolist', 'application', 'react']}
     />
-    <TodoList data={data} />
+    <TodoList />
 
   </Layout>
 )
 
 export default IndexPage
-
-export const pageQuery = graphql`
-  query IndexQuery {
-    allStrapiTask {
-      edges {
-        node {
-          id
-          content
-          done
-        }
-      }
-    }
-  }
-`
