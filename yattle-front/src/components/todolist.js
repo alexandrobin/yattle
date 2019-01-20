@@ -9,13 +9,13 @@ class TodoList extends React.Component {
   state = {
     tasks: [
       {
-        text: 'Test Task',
+        content: 'Test Task',
         priority: 5,
         done: true,
         ts: 123456,
       },
       {
-        text: 'Test Task 2',
+        content: 'Test Task 2',
         priority: 5,
         done: false,
         ts: 2345678,
@@ -77,6 +77,7 @@ class TodoList extends React.Component {
   }
 
   render() {
+    const { data } = this.props
     return (
       <div className="container">
         <div className="main-app">
@@ -86,6 +87,7 @@ class TodoList extends React.Component {
             value={this.state.inputValue}
           />
           <ListOfTasks
+            data={data}
             tasks={this.state.tasks}
             deleteTask={this.deleteTask}
             setTaskAsDone={this.setTaskAsDone}
@@ -118,13 +120,34 @@ const InputTask = ({ onChangeTask, value, addTask }) => (
 
 
 const ListOfTasks = ({
-  tasks, deleteTask, setTaskAsDone, onEditTask,
+  tasks, deleteTask, setTaskAsDone, onEditTask, data,
 }) => (
   <div className="list-container">
-    {tasks.map((task, i) => (
+    {/* {tasks.map((task, i) => (
       <Task i={i} task={task} deleteTask={deleteTask} setTaskAsDone={setTaskAsDone} onEditTask={onEditTask} />
     ))
-      }
+      } */}
+    {
+      data.allStrapiTask.edges.map((task, i) => (
+        <Task
+          i={
+          i
+        }
+          task={
+          task
+        }
+          deleteTask={
+          deleteTask
+        }
+          setTaskAsDone={
+          setTaskAsDone
+        }
+          onEditTask={
+          onEditTask
+        }
+        />
+      ))
+    }
   </div>
 )
 
@@ -133,8 +156,9 @@ class Task extends React.Component {
     const {
       setTaskAsDone, task, i, onEditTask, deleteTask,
     } = this.props
-    const done = task.done
+    const done = task.node.done
     return (
+
       <div key={i} className="list" draggable>
         <FontAwesomeIcon
           icon={done ? ['fas', 'check-circle'] : ['far', 'check-circle']}
@@ -148,7 +172,7 @@ class Task extends React.Component {
         }
           onChange={onEditTask}
         >
-          {task.text}
+          {task.node.content}
         </p>
         <Pomodoro />
         <FontAwesomeIcon
