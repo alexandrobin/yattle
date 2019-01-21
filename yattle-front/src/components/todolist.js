@@ -58,16 +58,20 @@ class TodoList extends React.Component {
 
   deleteTask = (i) => {
     const { tasks } = this.state
-
     tasks.splice(i, 1)
     this.setState({
       tasks,
     })
   }
 
-  onEditTask = (e) => {
-    const { tasks } = this.state
+  onEditTask = (e, i) => {
     console.log(e)
+    const { tasks } = this.state
+    tasks[i].content = e.target.value
+    this.setState({
+      tasks,
+    })
+
   }
 
   onChangeTask = (e) => {
@@ -87,10 +91,10 @@ class TodoList extends React.Component {
             value={this.state.inputValue}
           />
           <ListOfTasks
-            data={data}
             tasks={this.state.tasks}
             deleteTask={this.deleteTask}
             setTaskAsDone={this.setTaskAsDone}
+            onEditTask={this.onEditTask}
           />
         </div>
       </div>
@@ -120,7 +124,7 @@ const InputTask = ({ onChangeTask, value, addTask }) => (
 
 
 const ListOfTasks = ({
-  tasks, deleteTask, setTaskAsDone, onEditTask, data,
+  tasks, deleteTask, setTaskAsDone, onEditTask,
 }) => (
   <div className="list-container">
     {tasks.map((task, i) => (
@@ -144,15 +148,15 @@ class Task extends React.Component {
           onClick={() => setTaskAsDone(i)}
           className={`tooltiped icon okay ${done ? 'done' : ''}`}
         />
-        <p
-          contentEditable
+        <input type="text"
           className={
-          `text ${done ? 'done' : ''}`
-        }
-          onChange={onEditTask}
-        >
-          {task.content}
-        </p>
+            `text ${done ? 'done' : ''}`
+          }
+          onChange={(e) => {
+            onEditTask(e,i)
+          }}
+          value={task.content}
+        />
         <Pomodoro />
         <FontAwesomeIcon
           icon={['fas', 'trash']}
