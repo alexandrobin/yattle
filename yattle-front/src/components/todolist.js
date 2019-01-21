@@ -34,6 +34,7 @@ class TodoList extends React.Component {
       console.log({tasks})
       this.setState({
         tasks,
+        inputValue:""
       })
     }
   }
