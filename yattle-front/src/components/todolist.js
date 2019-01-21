@@ -24,12 +24,14 @@ class TodoList extends React.Component {
   }
 
   addTask = (event) => {
+    console.log(this.state.inputValue)
     if (event.key === 'Enter') {
       const { tasks } = this.state
       const newTask = {
-        text: this.state.inputValue,
+        content: this.state.inputValue,
       }
       tasks.push(newTask)
+      console.log({tasks})
       this.setState({
         tasks,
       })
@@ -65,7 +67,6 @@ class TodoList extends React.Component {
   }
 
   onEditTask = (e, i) => {
-    console.log(e)
     const { tasks } = this.state
     tasks[i].content = e.target.value
     this.setState({
@@ -152,10 +153,11 @@ class Task extends React.Component {
           className={
             `text ${done ? 'done' : ''}`
           }
+          value={task.content}
           onChange={(e) => {
             onEditTask(e,i)
           }}
-          value={task.content}
+          
         />
         <Pomodoro />
         <FontAwesomeIcon
