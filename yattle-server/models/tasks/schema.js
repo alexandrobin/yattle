@@ -9,5 +9,6 @@ export default {
         type: Types.ObjectId,
         ref: Users.name,
     },
+    status:Types.Boolean,
     timestamp: Types.Date,
 }

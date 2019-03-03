@@ -3,10 +3,11 @@ import Persistence from '@foundationjs/persistence'
 import models from './models'
 
 const persistence = new Persistence()
+const server = new Server()
 
 persistence.init({
     // Setup our data models (empty for now)
-    models,
+    models:models,
 
     // Setup logging to go to the console.
     // If this is not provided, all logging will go into a .log file at the root
@@ -17,8 +18,6 @@ persistence.init({
     // Setup the MongoDB endpoint
     endpoint: 'mongodb://127.0.0.1/yattle',
 })
-
-const server = new Server()
 
 server.init({
     // This is the configuration object of Foundation Server

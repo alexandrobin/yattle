@@ -7,5 +7,6 @@ export default {
         type: Types.String,
         unique: true,
     },
+    password:Types.String,
     displayName: Types.String,
 }

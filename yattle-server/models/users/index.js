@@ -1,8 +1,8 @@
 import schema from './schema'
-import fields from '.fields'
+import fields from './fields'
 
 export default {
-    name: 'users',
+    name: 'user',
     schema,
     fields
 }

@@ -1,25 +1,16 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/button-has-type */
 import React from 'react'
+import Query from '@foundationjs/query'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Pomodoro from './pomodoro'
+import { LoginForm, SigninForm } from './login'
 import './todolist.scss'
+import { TaskController, UserController } from '../controllers'
 
 class TodoList extends React.Component {
   state = {
-    tasks: [
-      {
-        content: 'Test Task',
-        priority: 5,
-        done: true,
-        ts: 123456,
-      },
-      {
-        content: 'Test Task 2',
-        priority: 5,
-        done: false,
-        ts: 2345678,
-      }],
+    tasks: [],
     inputValue: '',
   }
 
@@ -31,10 +22,10 @@ class TodoList extends React.Component {
         content: this.state.inputValue,
       }
       tasks.push(newTask)
-      console.log({tasks})
+      console.log({ tasks })
       this.setState({
         tasks,
-        inputValue:""
+        inputValue: '',
       })
     }
   }
@@ -42,13 +33,13 @@ class TodoList extends React.Component {
   setTaskAsDone = (i) => {
     const { tasks } = this.state
     const task = tasks[i]
-    task.done = !task.done
-    if (task.done) {
+    task.status = !task.status
+    if (task.status) {
       tasks.splice(i, 1)
       tasks.push(task)
       const ding = new Audio('https://freesound.org/data/previews/66/66136_606715-lq.mp3')
       ding.play()
-    } else if (!task.done) {
+    } else if (!task.status) {
       // to be done to let the task goes back to it's initial position
     }
 
@@ -73,7 +64,6 @@ class TodoList extends React.Component {
     this.setState({
       tasks,
     })
-
   }
 
   onChangeTask = (e) => {
@@ -82,11 +72,29 @@ class TodoList extends React.Component {
     })
   }
 
+  loadTasks = async () => {
+    const tasks = await TaskController.query
+      .list()
+      .select({
+        content: true,
+        status: true,
+      }).then(response => response)
+      .catch(err => console.log(err))
+    console.log(tasks)
+  }
+
+  componentDidMount() {
+    this.loadTasks()
+  }
+
   render() {
-    const { data } = this.props
     return (
       <div className="container">
+        <button onClick={this.loadTasks}>Load Task</button>
+        <LoginForm />
+        <SigninForm />
         <div className="main-app">
+
           <InputTask
             addTask={this.addTask}
             onChangeTask={this.onChangeTask}
@@ -130,7 +138,7 @@ const ListOfTasks = ({
 }) => (
   <div className="list-container">
     {tasks.map((task, i) => (
-      <Task i={i} task={task} deleteTask={deleteTask} setTaskAsDone={setTaskAsDone} onEditTask={onEditTask} />
+      <Task i={i} key={i} task={task} deleteTask={deleteTask} setTaskAsDone={setTaskAsDone} onEditTask={onEditTask} />
     ))
       }
   </div>
@@ -141,24 +149,25 @@ class Task extends React.Component {
     const {
       setTaskAsDone, task, i, onEditTask, deleteTask,
     } = this.props
-    const done = task.done
+    const status = task.status
     return (
 
       <div key={i} className="list" draggable>
         <FontAwesomeIcon
-          icon={done ? ['fas', 'check-circle'] : ['far', 'check-circle']}
+          icon={status ? ['fas', 'check-circle'] : ['far', 'check-circle']}
           onClick={() => setTaskAsDone(i)}
-          className={`tooltiped icon okay ${done ? 'done' : ''}`}
+          className={`tooltiped icon okay ${status ? 'done' : ''}`}
         />
-        <input type="text"
+        <input
+          type="text"
           className={
-            `text ${done ? 'done' : ''}`
+            `text ${status ? 'done' : ''}`
           }
           value={task.content}
           onChange={(e) => {
-            onEditTask(e,i)
+            onEditTask(e, i)
           }}
-          
+
         />
         <Pomodoro />
         <FontAwesomeIcon
