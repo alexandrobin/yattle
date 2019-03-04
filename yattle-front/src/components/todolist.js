@@ -61,6 +61,14 @@ class TodoList extends React.Component {
   onEditTask = (e, i) => {
     const { tasks } = this.state
     tasks[i].content = e.target.value
+    const _id = e.target.id
+    TaskController.mutate
+      .update({
+        _id,
+      })
+      .withContent({
+        content: e.target.value,
+      })
     this.setState({
       tasks,
     })
@@ -78,9 +86,10 @@ class TodoList extends React.Component {
       .select({
         content: true,
         status: true,
-      }).then(response => response)
+        _id: true,
+      })
       .catch(err => console.log(err))
-    console.log(tasks)
+    this.setState({ tasks })
   }
 
   componentDidMount() {
@@ -138,7 +147,26 @@ const ListOfTasks = ({
 }) => (
   <div className="list-container">
     {tasks.map((task, i) => (
-      <Task i={i} key={i} task={task} deleteTask={deleteTask} setTaskAsDone={setTaskAsDone} onEditTask={onEditTask} />
+      <Task
+        id={
+        task._id
+      }
+        key={
+        i
+      }
+        task={
+        task
+      }
+        deleteTask={
+        deleteTask
+      }
+        setTaskAsDone={
+        setTaskAsDone
+      }
+        onEditTask={
+        onEditTask
+      }
+      />
     ))
       }
   </div>
