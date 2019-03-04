@@ -17,6 +17,13 @@ class TodoList extends React.Component {
   addTask = (event) => {
     console.log(this.state.inputValue)
     if (event.key === 'Enter') {
+      TaskController.mutate
+        .create()
+        .withContent({
+          content: this.state.inputValue,
+          status: false,
+        })
+        .catch(err => console.log(err))
       const { tasks } = this.state
       const newTask = {
         content: this.state.inputValue,
@@ -30,10 +37,17 @@ class TodoList extends React.Component {
     }
   }
 
-  setTaskAsDone = (i) => {
+  setTaskAsDone = (i, id) => {
     const { tasks } = this.state
     const task = tasks[i]
     task.status = !task.status
+    TaskController.mutate
+      .update()
+      .withId(id)
+      .withContent({
+        status: task.status,
+      })
+      .catch(err => console.log(err))
     if (task.status) {
       tasks.splice(i, 1)
       tasks.push(task)
@@ -50,25 +64,28 @@ class TodoList extends React.Component {
   }
 
 
-  deleteTask = (i) => {
+  deleteTask = (i, id) => {
     const { tasks } = this.state
     tasks.splice(i, 1)
+    TaskController.mutate
+      .delete()
+      .withId(id)
+      .catch(err => console.log(err))
     this.setState({
       tasks,
     })
   }
 
-  onEditTask = (e, i) => {
+  onEditTask = (e, i, id) => {
     const { tasks } = this.state
     tasks[i].content = e.target.value
-    const _id = e.target.id
     TaskController.mutate
-      .update({
-        _id,
-      })
+      .update()
+      .withId(id)
       .withContent({
         content: e.target.value,
       })
+      .catch(err => console.log(err))
     this.setState({
       tasks,
     })
@@ -151,6 +168,7 @@ const ListOfTasks = ({
         id={
         task._id
       }
+        i={i}
         key={
         i
       }
@@ -175,7 +193,7 @@ const ListOfTasks = ({
 class Task extends React.Component {
   render() {
     const {
-      setTaskAsDone, task, i, onEditTask, deleteTask,
+      setTaskAsDone, task, i, id, onEditTask, deleteTask,
     } = this.props
     const status = task.status
     return (
@@ -183,7 +201,7 @@ class Task extends React.Component {
       <div key={i} className="list" draggable>
         <FontAwesomeIcon
           icon={status ? ['fas', 'check-circle'] : ['far', 'check-circle']}
-          onClick={() => setTaskAsDone(i)}
+          onClick={() => setTaskAsDone(i, id)}
           className={`tooltiped icon okay ${status ? 'done' : ''}`}
         />
         <input
@@ -193,14 +211,14 @@ class Task extends React.Component {
           }
           value={task.content}
           onChange={(e) => {
-            onEditTask(e, i)
+            onEditTask(e, i, id)
           }}
 
         />
         <Pomodoro />
         <FontAwesomeIcon
           icon={['fas', 'trash']}
-          onClick={() => deleteTask(i)}
+          onClick={() => deleteTask(i, id)}
           className="icon delete"
         />
       </div>
