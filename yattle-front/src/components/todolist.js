@@ -19,29 +19,6 @@ class TodoList extends React.Component {
     inputValue: '',
   }
 
-  addTask = (event) => {
-    console.log(this.state.inputValue)
-    if (event.key === 'Enter') {
-      TaskController.mutate
-        .create()
-        .withContent({
-          content: this.state.inputValue,
-          status: false,
-        })
-        .catch(err => console.log(err))
-      const { tasks } = this.state
-      const newTask = {
-        content: this.state.inputValue,
-      }
-      tasks.push(newTask)
-      console.log({ tasks })
-      this.setState({
-        tasks,
-        inputValue: '',
-      })
-    }
-  }
-
   setTaskAsDone = (i, id) => {
     const { tasks } = this.state
     const task = tasks[i]
@@ -115,7 +92,36 @@ class TodoList extends React.Component {
   }
 
   componentDidMount() {
+    const self = this
+    console.log(self.props.session.user)
     this.loadTasks()
+  }
+
+  addTask = (event) => {
+    console.log(this.state.inputValue)
+    if (event.key === 'Enter') {
+      TaskController.mutate
+        .create()
+        .withContent({
+          content: this.state.inputValue,
+          status: false,
+        })
+        .catch(err => console.log(err))
+      const {
+        tasks,
+      } = this.state
+      const newTask = {
+        content: this.state.inputValue,
+      }
+      tasks.push(newTask)
+      console.log({
+        tasks,
+      })
+      this.setState({
+        tasks,
+        inputValue: '',
+      })
+    }
   }
 
   render() {

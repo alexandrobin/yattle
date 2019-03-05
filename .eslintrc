@@ -16,6 +16,7 @@
         "airbnb"
     ],
     "rules": {
+        "react/jsx-filename-extension":"off",
         "max-len": [
             "error",
             120

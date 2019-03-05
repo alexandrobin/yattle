@@ -21,8 +21,6 @@ const LoginPage = () => (
     }
     />
     <Login />
-
-
   </Layout>
 )
 
