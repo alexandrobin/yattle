@@ -1,13 +1,18 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/button-has-type */
 import React from 'react'
-import Query from '@foundationjs/query'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  observer,
+  inject,
+} from 'mobx-react'
 import Pomodoro from './pomodoro'
-import { LoginForm, SigninForm } from './login'
 import './todolist.scss'
-import { TaskController, UserController } from '../controllers'
+import { TaskController } from '../controllers'
 
+
+@inject(({ session }) => ({ session }))
+@observer
 class TodoList extends React.Component {
   state = {
     tasks: [],
@@ -116,9 +121,6 @@ class TodoList extends React.Component {
   render() {
     return (
       <div className="container">
-        <button onClick={this.loadTasks}>Load Task</button>
-        <LoginForm />
-        <SigninForm />
         <div className="main-app">
 
           <InputTask

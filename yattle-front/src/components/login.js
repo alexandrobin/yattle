@@ -28,6 +28,7 @@ class LoginForm extends React.Component {
             token,
           })
           window.localStorage.setItem('token', token)
+          window.location.href = '/'
         })
       }
     }
@@ -133,4 +134,15 @@ Password
     }
 }
 
-export { SigninForm, LoginForm }
+class Login extends React.Component {
+  render() {
+    return (
+      <div>
+        <LoginForm />
+        <SigninForm />
+      </div>
+    )
+  }
+}
+
+export default Login

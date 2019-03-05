@@ -1,4 +1,3 @@
-/* eslint-disable react/button-has-type */
 import React from 'react'
 import {
   Link,
@@ -9,20 +8,22 @@ import {
 import Layout from '../components/layout'
 import library from '../components/fontawesome'
 import SEO from '../components/seo'
-import TodoList from '../components/todolist'
+import Login from '../components/login'
 
 
-const IndexPage = () => (
+const LoginPage = () => (
   <Layout>
-    <Link to ="/login"> Sign In </Link>
+    <Link to ="/"> Go back to the homepage </Link>
     <SEO
       title="Yattle"
       keywords={
-    ['todolist', 'application', 'react']}
+        ['todolist', 'application', 'react']
+    }
     />
-    <TodoList />
+    <Login />
+
 
   </Layout>
 )
 
-export default IndexPage
+export default LoginPage
