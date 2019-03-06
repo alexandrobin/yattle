@@ -7,14 +7,14 @@ import {
 
 
 import Layout from '../components/layout'
-import library from '../components/fontawesome'
-import SEO from '../components/seo'
+import library from '../utils/fontawesome'
+import SEO from '../utils/seo'
 import TodoList from '../components/todolist'
 
 
 const IndexPage = () => (
   <Layout>
-    <Link to ="/login"> Sign In </Link>
+    <Link to="/login"> Sign In </Link>
     <SEO
       title="Yattle"
       keywords={

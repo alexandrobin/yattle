@@ -7,7 +7,7 @@ import {
   inject,
 } from 'mobx-react'
 import Pomodoro from './pomodoro'
-import './todolist.scss'
+import '../style/todolist.scss'
 import { TaskController } from '../controllers'
 
 
@@ -17,6 +17,12 @@ class TodoList extends React.Component {
   state = {
     tasks: [],
     inputValue: '',
+  }
+
+  componentDidMount() {
+    const self = this
+    console.log(self.props.session.user)
+    this.loadTasks()
   }
 
   setTaskAsDone = (i, id) => {
@@ -91,11 +97,6 @@ class TodoList extends React.Component {
     this.setState({ tasks })
   }
 
-  componentDidMount() {
-    const self = this
-    console.log(self.props.session.user)
-    this.loadTasks()
-  }
 
   addTask = (event) => {
     console.log(this.state.inputValue)

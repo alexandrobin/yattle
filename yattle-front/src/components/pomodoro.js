@@ -3,7 +3,7 @@ import {
   FontAwesomeIcon,
 } from '@fortawesome/react-fontawesome'
 
-import './pomodoro.scss'
+import '../style/pomodoro.scss'
 
 const STATE = {
   init: {

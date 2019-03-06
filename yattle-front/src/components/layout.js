@@ -8,7 +8,7 @@ import {
 import stateSession from '../states/session'
 
 import Header from './header'
-import './layout.css'
+import '../style/layout.css'
 
 
 const Layout = ({ children }) => (
